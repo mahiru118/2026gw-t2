@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>単音ハモリ道場 - 持続音＆モード選択</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 30px; background: #f4f6f9; color: #333; }
+    .card { background: #fff; max-width: 560px; margin: 0 auto; padding: 28px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    
+    /* モード切替タブ */
+    .mode-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+    .tab-btn { flex: 1; padding: 10px; font-size: 15px; border: 2px solid #2563eb; background: #fff; color: #2563eb; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .tab-btn.active { background: #2563eb; color: #fff; }
+
+    /* 手動選択パネル */
+    #manual-controls { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 15px; display: none; }
+    select { font-size: 15px; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; margin: 5px; }
+
+    /* 出題表示エリア */
+    .question-box { background: #eef4ff; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .question-box h2 { margin: 0 0 8px 0; font-size: 26px; color: #1e40af; }
+    .question-box p { margin: 0; font-size: 16px; color: #475569; }
+
+    /* 操作ボタン */
+    .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 15px 0; }
+    button.action-btn { font-size: 15px; padding: 10px 16px; cursor: pointer; border: none; border-radius: 6px; background: #2563eb; color: #fff; transition: 0.2s; }
+    button.action-btn:hover { background: #1d4ed8; }
+    button.mute-btn { background: #f59e0b; }
+    button.mute-btn.muted { background: #64748b; }
+    button.chord-btn { background: #4f46e5; }
+    button.next-btn { background: #059669; }
+
+    #status { font-size: 22px; font-weight: bold; margin: 20px 0 8px 0; min-height: 32px; }
+    #pitch-display { font-size: 14px; color: #64748b; }
+    .progress-container { width: 100%; background: #e2e8f0; height: 14px; border-radius: 7px; overflow: hidden; margin-top: 15px; }
+    #progress-bar { width: 0%; height: 100%; background: #10b981; transition: width 0.05s linear; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎵 単音ハモリ道場</h1>
+
+    <!-- モード選択タブ -->
+    <div class="mode-tabs">
+      <button id="tab-random" class="tab-btn active">🎲 ランダム出題モード</button>
+      <button id="tab-manual" class="tab-btn">🎛️ 自分で選ぶモード</button>
+    </div>
+
+    <!-- 自分で選ぶモード用の設定パネル -->
+    <div id="manual-controls">
+      <label>基準音:
+        <select id="select-base"></select>
+      </label>
+      <label>ハモリ度数:
+        <select id="select-interval"></select>
+      </label>
+    </div>
+
+    <!-- 出題ボックス -->
+    <div class="question-box">
+      <h2 id="question-title">基準音: ---</h2>
+      <p id="question-sub">お題: ---</p>
+    </div>
+
+    <!-- コントロールボタン -->
+    <div class="controls">
+      <button id="toggle-sound-btn" class="action-btn mute-btn">🔊 基準音: 再生中（クリックで停止）</button>
+      <button id="play-chord-btn" class="action-btn chord-btn">🎹 正解の和音を聴く</button>
+      <button id="next-btn" class="action-btn next-btn">⏭️ 次の問題へ</button>
+    </div>
+
+    <div style="margin-top: 15px;">
+      <button id="start-btn" class="action-btn" style="width: 85%; font-size: 17px; padding: 14px;">🎤 マイクと持続音をスタート</button>
+    </div>
+
+    <div id="status">上のボタンを押して開始してください</div>
+    <div id="pitch-display">現在の周波数: --- Hz</div>
+    
+    <div class="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
